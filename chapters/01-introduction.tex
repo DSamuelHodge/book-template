@@ -1,0 +1,24 @@
+\chapter{Introduction}\label{ch:intro}
+
+\newthought{This is the first sentence} of the book. Replace it with something
+only you could write. Every chapter lives in its own file so you can point
+Cursor at exactly one chapter at a time.
+
+Terms get introduced once with \defn{defn}, then appear as \term{plain terms}.
+Cite inline with \autocite{tufte2001}, or put the full reference in the margin
+instead.\sidecite{knuth1984} Margin notes are a Tufte signature, so use them for
+asides, definitions, and sources rather than burying them in footnotes.
+
+\section{A section}
+
+Equations work as usual:
+\begin{equation}
+  \hat{y} = \beta_0 + \beta_1 x + \varepsilon.
+  \label{eq:model}
+\end{equation}
+Refer back to them with Equation~\ref{eq:model}.
+
+\marginnote{A \texttt{\textbackslash marginnote} has no number; use
+\texttt{\textbackslash sidenote} when you want one.}
+
+\todo{Write the real introduction.}

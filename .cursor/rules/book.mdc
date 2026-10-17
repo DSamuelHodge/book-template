@@ -1,0 +1,33 @@
+---
+description: Core rules for this book project
+alwaysApply: true
+---
+# Book rules
+
+Project: a tufte-book LaTeX manuscript. Read `notes/book-bible.md` for thesis, reader, and voice.
+
+## Voice and authorship
+- The author writes the prose. Never rewrite a paragraph unless asked.
+- When asked to edit, make the smallest change that works and keep the author's sentence rhythm.
+- Match the voice samples in `notes/book-bible.md`. Avoid filler openers ("In today's world"), stacked hedges, and tidy "In conclusion" endings.
+- For feedback requests ("review", "critique"), give a list of issues. Do not edit the files.
+
+## LaTeX conventions
+- One chapter per file in `chapters/`, included from `main.tex` with `\input`.
+- Use macros from `preamble/macros.tex`: `\term{}`, `\defn{}`, `\sidecite{}`, `\todo{}`. Add new macros there, not inline.
+- Prefer `\sidenote`/`\marginnote` over footnotes. Start chapters and major sections with `\newthought{}`.
+- Cite with `\autocite{key}`. Only use keys that exist in `bib/refs.bib`. If the source is missing, write `\citeneeded`. Never invent a reference, DOI, page number, or quote.
+- Terminology follows `notes/glossary.md`.
+
+## Figures
+- Diagrams: TikZ, using the `box` and `flow` styles from `preamble/style.tex`.
+- Data charts: pgfplots with `book plot` style reading `data/*.csv`, or a Python script in `figures/src/` (shared style `figures/src/style.mplstyle`) writing PDF to `figures/out/`.
+- Every figure needs `\caption` (readable on its own) and `\label{fig:...}`. Reference with `Figure~\ref{}`.
+- Use `marginfigure` for small, `figure` for text width, `figure*` for full width.
+
+## Research
+- Facts in the manuscript should trace to `notes/research/*.md` or `bib/refs.bib`.
+- When asked about sources, answer only from `notes/research/` and say so if the notes don't cover it.
+
+## Build
+- Run `make` to build. After edits, check `build/main.log` for undefined references, citations, and overfull boxes.

@@ -1,0 +1,7 @@
+% ---- Your semantic macros. Use these instead of raw formatting.
+% Keep notes/glossary.md in sync with the terms you wrap in \term / \defn.
+\newcommand{\term}[1]{\textit{#1}}          % a term used in passing
+\newcommand{\defn}[1]{\textbf{#1}}          % a term defined here, for the first time
+\newcommand{\sidecite}[1]{\sidenote{\fullcite{#1}}} % full reference in the margin
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}   % grep-able; remove before print
+\newcommand{\citeneeded}{\textcolor{red}{[CITATION NEEDED]}}

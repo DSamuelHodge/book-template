@@ -1,0 +1,66 @@
+\chapter{Figures and Margins}\label{ch:figs}
+
+\newthought{Tufte layouts offer} three figure sizes: margin, text width, and
+full width. Pick by how much room the picture needs.
+
+\section{A diagram in the margin (TikZ)}
+
+\begin{marginfigure}
+  \begin{tikzpicture}
+    \node[box] (a) {Draft};
+    \node[box,below=6mm of a] (b) {Edit};
+    \node[box,below=6mm of b] (c) {Typeset};
+    \draw[flow] (a) -- (b);
+    \draw[flow] (b) -- (c);
+    \draw[flow] (c.east) -- ++(8mm,0) |- (a.east);
+  \end{tikzpicture}
+  \caption{The writing loop.}\label{fig:loop}
+\end{marginfigure}
+
+Figure~\ref{fig:loop} sits in the margin beside the text that discusses it.
+Every figure gets a label and a caption that makes sense on its own.
+
+\section{A full-width chart (pgfplots, data from CSV)}
+
+\begin{figure*}
+  \begin{tikzpicture}
+    \begin{axis}[book plot,width=\linewidth,height=5.5cm,
+                 xlabel={Year},ylabel={Value},
+                 xtick=data]
+      \addplot table[col sep=comma,x=year,y=value]{data/sample.csv};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{A pgfplots chart that reads \texttt{data/sample.csv}. Edit the CSV
+  and rebuild; nothing is copied by hand.}\label{fig:pgf}
+\end{figure*}
+
+\section{A generated figure (Python)}
+
+For heavier charts, write a script in \texttt{figures/src/} and let the
+Makefile render it to \texttt{figures/out/}.
+
+\IfFileExists{figures/out/growth.pdf}{%
+\begin{figure}
+  \includegraphics[width=\linewidth]{growth}
+  \caption{Rendered by \texttt{figures/src/growth.py} with the shared
+  matplotlib style.}\label{fig:py}
+\end{figure}%
+}{\fbox{Run \texttt{make figures} to generate Figure~\ref{fig:py}.}}
+
+\section{A table}
+
+\begin{margintable}
+  \footnotesize
+  \begin{tabular}{ll}
+    \toprule
+    Mode & AI role \\
+    \midrule
+    Draft & off \\
+    Edit & reviewer \\
+    Typeset & agent \\
+    \bottomrule
+  \end{tabular}
+  \caption{Working modes.}
+\end{margintable}
+
+Use \texttt{booktabs} rules only (no vertical lines), as in the margin table.

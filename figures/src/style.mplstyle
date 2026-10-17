@@ -1,0 +1,10 @@
+font.family: serif
+font.serif: TeX Gyre Pagella, Palatino, DejaVu Serif
+font.size: 8
+axes.spines.top: False
+axes.spines.right: False
+axes.grid: False
+axes.prop_cycle: cycler('color', ['8B1E3F', '2F5D8A', '5B8C5A', 'C08A2B'])
+lines.linewidth: 1.4
+pdf.fonttype: 42
+savefig.bbox: tight

@@ -1,0 +1,18 @@
+% ---- Packages (tufte-book loads hyperref, xcolor, etc.; we add the rest explicitly)
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{csquotes}
+
+% Figures
+\usepackage{graphicx}
+\graphicspath{{figures/out/}}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=newest}
+
+% Bibliography (biber backend)
+\usepackage[backend=biber,style=authoryear-comp,maxbibnames=6,giveninits=true]{biblatex}
+\addbibresource{bib/refs.bib}

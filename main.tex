@@ -1,0 +1,27 @@
+% Build with:  make        (figures, then latexmk)
+%              make watch  (continuous rebuild)
+\documentclass[a4paper,nobib]{tufte-book} % nobib: lets us use biblatex
+
+\input{preamble/packages}
+\input{preamble/macros}
+\input{preamble/style}
+
+\title{Working Title}
+\author{Your Name}
+\publisher{Self-published}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+\listoffigures
+
+\mainmatter
+\input{chapters/01-introduction}
+\input{chapters/02-figures-and-margins}
+
+\backmatter
+\printbibliography
+
+\end{document}

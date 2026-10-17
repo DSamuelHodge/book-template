@@ -1,0 +1,9 @@
+---
+description: Editing .tex files
+globs: ["**/*.tex"]
+alwaysApply: false
+---
+- Keep lines as paragraphs (soft wrap). One sentence per line is fine if the author already does it.
+- Do not add packages in chapter files; add them to `preamble/packages.tex`.
+- Use `~` before `\ref`, `\cite`, and between numbers and units. Use `---` for em dashes, `--` for ranges.
+- Leave `% TODO` / `\todo{}` markers in place.

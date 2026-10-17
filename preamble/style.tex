@@ -1,0 +1,26 @@
+% ---- Look and feel
+\definecolor{accent}{HTML}{8B1E3F}
+\hypersetup{colorlinks=true,linkcolor=accent,citecolor=accent,urlcolor=accent}
+\setcounter{tocdepth}{1}
+
+% Shared pgfplots look: light, no box, Tufte-ish
+\pgfplotsset{
+  book plot/.style={
+    axis lines=left,
+    tick align=outside,
+    cycle list={{accent,thick,mark=*,mark size=1.5pt}},
+    scaled ticks=false,
+    /pgf/number format/1000 sep={},
+    xlabel style={font=\small},
+    ylabel style={font=\small},
+    tick label style={font=\footnotesize},
+    clip=false,
+  }
+}
+
+% Shared TikZ look for diagrams
+\tikzset{
+  box/.style={draw=black!70,rounded corners=2pt,minimum height=7mm,
+              inner sep=4pt,font=\small,align=center},
+  flow/.style={-{Stealth[length=2.2mm]},thick,black!70},
+}
