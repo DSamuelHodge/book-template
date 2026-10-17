@@ -5,6 +5,8 @@ TeX Live/MacTeX (with `tufte-latex`, `biber`, `pgfplots`), `latexmk`, Python 3 +
 Optional: `graphviz` (`.dot`), `@mermaid-js/mermaid-cli` (`.mmd`), `texcount`.
 
 ## Use
+See [How to Use](GUIDE.md) for the full writing workflow.
+
     make            # figures + PDF  (output: book.pdf)
     make watch      # rebuild on change
     make words      # word count
