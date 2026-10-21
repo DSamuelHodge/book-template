@@ -1,0 +1,123 @@
+\chapter{The Many Faces of Softmax}\label{ch:softmax}
+
+\newthought{Softmax looks like} a rule for turning scores into weights. That
+description is correct and thin. The same map is the gradient of a convex
+function, the moment map of a torus action, and the inverse gradient of
+negative entropy, up to a common shift in the logits. Each face shows what
+the others hide.
+
+\section{Scores modulo a common shift}
+
+Let $z\in\mathbb{R}^N$ be a vector of logits. The \defn{softmax} map sends
+those scores to a probability vector:
+\begin{equation}
+  p_i(z) = \frac{e^{z_i}}{\sum_{j=1}^N e^{z_j}},
+  \qquad i=1,\ldots,N.
+  \label{eq:softmax}
+\end{equation}
+The denominator forces the entries to sum to one. More quietly, softmax
+throws away one degree of freedom. For any scalar $c$,
+\begin{equation}
+  p(z+c\mathbf{1})=p(z).
+  \label{eq:softmax-shift}
+\end{equation}
+Only score differences matter; a common offset has no vote.
+
+Thus softmax does not map all of $\mathbb{R}^N$ injectively to the simplex.
+It maps logits modulo constant shifts to the interior of the probability
+simplex. Every strictly positive probability vector has a representative:
+$z_i=\log p_i$ works, and every other representative adds the same constant
+to all entries. Boundary probabilities require a limit, as one or more logit
+differences run off to infinity.
+
+\section{The gradient face}
+
+The first face appears in the \defn{log-sum-exp} function,
+\begin{equation}
+  A(z)=\log\sum_{i=1}^N e^{z_i}.
+  \label{eq:log-sum-exp}
+\end{equation}
+Differentiate once and the scores become probabilities:
+\begin{equation}
+  \nabla A(z)=p(z).
+  \label{eq:softmax-gradient}
+\end{equation}
+Softmax is not an extra trick bolted onto a partition function. It is the
+partition function's slope.
+
+Differentiate again. The Hessian is
+\begin{equation}
+  \nabla^2 A(z)=\operatorname{diag}(p)-pp^\mathsf{T}.
+  \label{eq:lse-hessian}
+\end{equation}
+This matrix is the covariance matrix of a categorical outcome with
+probabilities $p$. It is positive semidefinite, and its null direction is
+$\mathbf{1}$: shifting every logit together changes nothing. The Hessian sees
+relative scores and ignores the dead common mode.
+
+\section{The entropy face}
+
+The \defn{Legendre dual} of $A$ is its convex conjugate: maximize
+$z\cdot p-A(z)$ over logits. The result is negative Shannon entropy on the
+simplex,
+\begin{equation}
+  A^*(p)=
+  \begin{cases}
+    \displaystyle\sum_{i=1}^N p_i\log p_i,
+      & p_i\geq 0,\ \sum_i p_i=1,\\
+    +\infty, & \text{otherwise},
+  \end{cases}
+  \label{eq:lse-conjugate}
+\end{equation}
+with $0\log 0=0$ at the boundary. This sign matters: Shannon entropy is
+$-\sum_i p_i\log p_i$; the convex dual carries the minus sign.
+
+The link is not merely a match of formulas. At $p=\nabla A(z)$, the
+Fenchel equality reads
+\begin{equation}
+  A(z)+A^*(p)=z\cdot p.
+  \label{eq:fenchel-equality}
+\end{equation}
+Indeed, $\log p_i=z_i-A(z)$; multiply by $p_i$, sum, and use
+$\sum_i p_i=1$. The logit vector and the probability vector are dual
+coordinates, with their pairing balanced by log-sum-exp and negative
+entropy.
+
+This duality also explains the shift symmetry. Adding $c\mathbf{1}$ to $z$
+adds $c$ to $A(z)$ and to $z\cdot p$; their difference stays fixed because
+$p$ has unit mass. The conjugate cares about the distribution, not which
+representative of its logits produced it.
+
+\section{The moment-map face}
+
+The third face lives in complex projective space. Let
+$[w_1:\cdots:w_N]\in\mathbb{CP}^{N-1}$. The torus $T^{N-1}$ rotates the
+coordinate phases, modulo the common phase that projective space already
+forgets. With the standard normalization, its \defn{moment map} has components
+\begin{equation}
+  \mu_i([w])=\frac{|w_i|^2}{\sum_{j=1}^N |w_j|^2},
+  \qquad i=1,\ldots,N.
+  \label{eq:projective-moment-map}
+\end{equation}
+The image is the closed probability simplex. Points with every coordinate
+nonzero map to its interior; zero coordinates land on its boundary.
+\citeneeded
+
+Now set $w_i=e^{z_i/2}$. Equation~\ref{eq:projective-moment-map} becomes
+exactly Equation~\ref{eq:softmax}. The logits set coordinate magnitudes;
+the torus rotates phases; the moment map keeps the normalized squared
+magnitudes and drops those phases. The common logit shift rescales every
+$w_i$ by the same factor, which projective space discards.
+
+\section{One map, three jobs}
+
+The gradient view says how probabilities respond to logits. The dual view
+says which convex potential belongs to those probabilities. The moment-map
+view says how phase symmetry collapses to a simplex. None replaces the
+others; each names a different structure carried by the same coordinates.
+
+In attention, the query-key scores enter as logits, and softmax turns them
+into the weights that mix values. The map keeps relative score information
+as a distribution. It discards the common offset, and in the projective
+picture it discards phase. That is not a defect to patch. It is the
+reduction that makes scores act as probabilities.
